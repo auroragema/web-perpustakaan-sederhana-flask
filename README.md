@@ -13,7 +13,7 @@ Proyek ini merupakan aplikasi web manajemen perpustakaan sederhana yang dikemban
 6. Halaman Konfirmasi Peminjaman
 
 <b> Struktur Folder Proyek </b>
-app/
+"""app/
 │
 ├── static/
 │   └── styles.css
@@ -27,7 +27,7 @@ app/
 │   └── peminjaman_success.html
 │
 ├── Books.csv
-└── app.py
+└── app.py"""
 
 <b> Teknologi yang Digunakan </b>
 1. Python
