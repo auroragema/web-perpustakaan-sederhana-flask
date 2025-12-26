@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Peminjaman Sukses</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <!-- Navbar -->
+    <div class="navbar">
+        <h1>Library</h1>
+        <form action="/" method="get">
+            <input type="text" name="query" placeholder="Search By Book Name" value="{{ request.args.get('query', '') }}">
+            <button type="submit">Search</button>
+        </form>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/books">All Books</a>
+            <a href="/peminjaman">Peminjaman</a>
+        </nav>
+    </div>
+
+    <!-- Peminjaman Sukses -->
+    <div class="peminjaman">
+        <div class="container">
+            <h2>Peminjaman Berhasil</h2>
+            <p><strong>Nama Peminjam:</strong> {{ user_name }}</p>
+            <p><strong>Tanggal Peminjaman:</strong> {{ borrow_date }}</p>
+            <p><strong>Tanggal Pengembalian:</strong> {{ return_date }}</p>
+            <p><strong>Jumlah Buku yang Dipinjam:</strong> {{ book_titles | length }}</p>
+            <ul>
+                {% for book in book_titles %}
+                    <li>{{ book }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

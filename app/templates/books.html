@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>All Books</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="navbar">
+        <h1>Library</h1>
+        <form action="/books" method="get">
+            <input 
+                type="text" 
+                name="q" 
+                placeholder="Search books by title..." 
+                value="{{ query }}" 
+            >
+            <button type="submit">Search</button>
+        </form>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/books">All Books</a>
+            <a href="/peminjaman">Peminjaman</a>
+        </nav>
+    </div>
+    
+    <div class="container">
+        <h2>All Books</h2>
+        {% if all_books %}
+            <div class="book-list">
+                {% for book in all_books %}
+                    <div class="book-item">
+                        <h3>{{ book['title'] }}</h3>
+                        <p>{{ book['author'] }}</p>
+                        <a href="/detail/{{ book['title'] }}" class="detail-btn">Detail</a>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>No books found for "<strong>{{ query }}</strong>".</p>
+        {% endif %}
+    </div>
+</body>
+</html>

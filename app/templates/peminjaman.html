@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library - Peminjaman Buku</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <!-- Navbar -->
+    <div class="navbar">
+        <h1>Library</h1>
+        <form action="/" method="get">
+            <input type="text" name="query" placeholder="Search By Book Name" value="{{ request.args.get('query', '') }}">
+            <button type="submit">Search</button>
+        </form>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/books">All Books</a>
+            <a href="/peminjaman">Peminjaman</a>
+        </nav>
+    </div>
+
+    <!-- Peminjaman Section -->
+    <div class="peminjaman">
+        <div class="container">
+            <h1>Peminjaman Buku</h1>
+            <form method="POST">
+                <label for="name">Nama Peminjam:</label>
+                <input type="text" id="name" name="name" required><br><br>
+
+                <label for="borrow_date">Tanggal Peminjaman:</label>
+                <input type="date" id="borrow_date" name="borrow_date" value="{{ today_date }}" required><br><br>
+
+                <label for="jumlah_buku">Jumlah Buku:</label>
+                <input type="number" id="jumlah_buku" name="jumlah_buku" min="1" required><br><br>
+
+                <div id="book_inputs">
+                    <label for="book_title_0">Pilih Buku 1:</label>
+                    <input type="text" id="book_title_0" name="book_title_0" list="book_list" required><br><br>
+                </div>
+
+                <datalist id="book_list">
+                    {% for book in books %}
+                        <option value="{{ book }}"></option>
+                    {% endfor %}
+                </datalist>
+
+                <input type="submit" value="Pinjam Buku">
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Menambahkan input buku berdasarkan jumlah buku yang dipilih
+        document.getElementById('jumlah_buku').addEventListener('input', function() {
+            var jumlahBuku = this.value;
+            var bookInputsDiv = document.getElementById('book_inputs');
+            bookInputsDiv.innerHTML = '';
+
+            for (var i = 0; i < jumlahBuku; i++) {
+                var label = document.createElement('label');
+                label.setAttribute('for', 'book_title_' + i);
+                label.textContent = 'Pilih Buku ' + (i + 1) + ':';
+
+                var input = document.createElement('input');
+                input.type = 'text';
+                input.id = 'book_title_' + i;
+                input.name = 'book_title_' + i;
+                input.setAttribute('list', 'book_list');
+                input.required = true;
+
+                bookInputsDiv.appendChild(label);
+                bookInputsDiv.appendChild(input);
+                bookInputsDiv.appendChild(document.createElement('br'));
+            }
+        });
+
+        // Filtering judul buku dengan JavaScript
+        window.onload = function() {
+            var bookOptions = document.querySelectorAll('#book_list option');
+            var filteredBooks = [];
+
+            // Memisahkan data dan hanya mengambil judul buku
+            bookOptions.forEach(function(option) {
+                var bookTitle = option.value.split(',')[1];  // Ambil kolom kedua (judul buku)
+                if (!filteredBooks.includes(bookTitle)) {
+                    filteredBooks.push(bookTitle);
+                }
+            });
+
+            // Clear datalist dan masukkan hanya judul buku
+            var bookList = document.getElementById('book_list');
+            bookList.innerHTML = '';
+            filteredBooks.forEach(function(title) {
+                var option = document.createElement('option');
+                option.value = title;
+                bookList.appendChild(option);
+            });
+        }
+    </script>
+</body>
+</html>

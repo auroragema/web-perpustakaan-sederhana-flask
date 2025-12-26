@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Detail Buku</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="navbar">
+        <h1>Library</h1>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/books">All Books</a>
+            <a href="/peminjaman">Peminjaman</a>
+        </nav>
+    </div>
+
+    <div class="book-detail">
+        <h2>{{ book.title }}</h2>
+        <p><strong>Author:</strong> {{ book.authors }}</p>
+        <p><strong>Year Published:</strong> {{ book.published_year }}</p>
+        <p><strong>Categories:</strong> {{ book.categories }}</p>
+        <p><strong>Rating:</strong> {{ book.rating }}</p>
+        <p><strong>Book Code (ISBN):</strong> {{ book.isbn }}</p>
+        <p><strong>Description:</strong> {{ book.description }}</p>
+        <a href="/books">Back to List</a>
+    </div>
+</body>
+</html>

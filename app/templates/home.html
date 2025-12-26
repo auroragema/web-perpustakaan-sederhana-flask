@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Library</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="navbar">
+        <h1>Library</h1>
+        <!-- Search Form -->
+        <form action="/" method="get">
+            <input type="text" name="query" placeholder="Search By Book Name" value="{{ request.args.get('query', '') }}">
+            <button type="submit">Search</button>
+        </form>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/books">All Books</a>
+            <a href="/peminjaman">Peminjaman</a>
+        </nav>
+    </div>
+    
+    <h2>Rekomendasi Buku</h2>
+    <div class="book-list">
+        {% if recommended_books %}
+            {% for book in recommended_books %}
+            <div class="book-item">
+                <h3>{{ book.title }}</h3>
+                <p>Rating: {{ book.rating }}/5</p>
+                <a href="/detail/{{ book.title }}">Detail</a>
+            </div>
+            {% endfor %}
+        {% else %}
+            <p>No books found matching your search.</p>
+        {% endif %}
+    </div>
+</body>
+</html>
